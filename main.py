@@ -1,16 +1,13 @@
-# This is a sample Python script.
+import cv2 as cv2
+from skimage import io
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+path_img_01 = 'images/images.jpeg'
+image01 = io.imread(path_img_01)
+image02 = io.imread(path_img_01)
+image02 = cv2.cvtColor(image02, cv2.COLOR_BGR2RGB)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+image02[0] = (0, 0, 0)
+cv2.imshow("imagem 02", image02)
+cv2.imshow("imagem 01", image01)
+cv2.waitKey(0)
