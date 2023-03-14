@@ -28,14 +28,11 @@ def convertToGrayWeighted(image):
 
 def main():
     path_img_01 = 'images/images.jpeg'
-    image01 = io.imread(path_img_01)
+
     image02 = io.imread(path_img_01)
-    image02 = cv.cvtColor(image02, cv.COLOR_BGR2RGB)
 
     convertToGray(image02)
     convertToGrayWeighted(image02)
-    # cv.imshow("imagem 02", image02)
-    cv.imshow("imagem 01", image01)
     cv.waitKey(0)
 
 
