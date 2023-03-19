@@ -37,8 +37,6 @@ def convertToGrayWeighted(image):
     cv.imshow("grasycale - weighted", auxImage)
 
 
-def
-
 def main():
     path_img_01 = 'images/images.jpeg'
 
