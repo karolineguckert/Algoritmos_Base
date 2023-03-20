@@ -1,34 +1,37 @@
 import cv2 as cv
-from skimage import io
 import numpy as np
+from skimage import io
 
-#Function to convert a color image to grayscale
-#using arithmetic method
+
+# Function to convert a color image to grayscale
+# using arithmetic method
 def convertToGray(image):
-    auxImage = np.zeros((image.shape[0], image.shape[1], 1), np.uint8) #create a new image with 1 channel
+    auxImage = np.zeros((image.shape[0], image.shape[1], 1), np.uint8)  # create a new image with 1 channel
 
-    height = image.shape[0] #takes the number of columns
-    width = image.shape[1]  #takes the number of lines
+    height = image.shape[0]  # takes the number of columns
+    width = image.shape[1]  # takes the number of lines
 
     for i in range(height):
         for j in range(width):
-
-            #sum all the color values and multiply to 0.33 to convert to grayscale
+            # sum all the color values and multiply to 0.33 to convert to grayscale
             auxImage[i, j] = sum(image[i, j]) * 0.33
 
     cv.imshow("grayscale - arithmetic", auxImage)
 
-#Function to convert a color image to grayscale
-#using weighted method
-def convertToGrayWeighted(image):
-    auxImage = np.zeros((image.shape[0], image.shape[1], 1), np.uint8) #create a new image with 1 channel
+    return auxImage
 
-    height = image.shape[0] #takes the number of columns
-    width = image.shape[1]  #takes the number of lines
+
+# Function to convert a color image to grayscale
+# using weighted method
+def convertToGrayWeighted(image):
+    auxImage = np.zeros((image.shape[0], image.shape[1], 1), np.uint8)  # create a new image with 1 channel
+
+    height = image.shape[0]  # takes the number of columns
+    width = image.shape[1]  # takes the number of lines
 
     for i in range(height):
         for j in range(width):
-            #get the color of each color channel in the pixel specified
+            # get the color of each color channel in the pixel specified
             (r, g, b) = image[i, j]
 
             # multiply each color channel and sum all the values to convert to grayscale
@@ -37,15 +40,72 @@ def convertToGrayWeighted(image):
     cv.imshow("grasycale - weighted", auxImage)
 
 
+# Function to isolate the channels of the image
+def isolateChanel(image):
+    auxImageRed = np.zeros((image.shape[0], image.shape[1], 3), np.uint8)  # create a new image with 1 channel
+    auxImageGreen = np.zeros((image.shape[0], image.shape[1], 3), np.uint8)  # create a new image with 1 channel
+    auxImageBlue = np.zeros((image.shape[0], image.shape[1], 3), np.uint8)  # create a new image with 1 channel
+
+    height = image.shape[0]  # takes the number of columns
+    width = image.shape[1]  # takes the number of lines
+
+    for i in range(height):
+        for j in range(width):
+            # get the color of each color channel in the pixel specified
+            (b, g, r) = image[i, j]
+
+            auxImageRed[i, j] = (0, 0, r)  # takes just the red pixel and makes others get 0
+            auxImageGreen[i, j] = (0, g, 0)  # takes just the green pixel and makes others get 0
+            auxImageBlue[i, j] = (b, 0, 0)  # takes just the blue pixel and makes others get 0
+
+    cv.imshow("isolate chanel red-", auxImageRed)
+    cv.imshow("isolate chanel green-", auxImageGreen)
+    cv.imshow("isolate chanel blue-", auxImageBlue)
+
+
+# Function to invert the image
+def invertImage(image):
+    auxImage = np.zeros((image.shape[0], image.shape[1], 3), np.uint8)  # create a new image with 1 channel
+
+    height = image.shape[0]  # takes the number of columns
+    width = image.shape[1]  # takes the number of lines
+
+    for i in range(height):
+        for j in range(width):
+            auxImage[i, j] = 255 - image[i, j]  # subtract the possible maximum value of the pixel value
+
+    cv.imshow("inverted -", auxImage)
+
+
+# Function to threshold the image
+def threshold(image, limit):
+    grayImage = convertToGray(image)  # convert image to gray
+    auxImage = np.zeros((grayImage.shape[0], grayImage.shape[1], 3), np.uint8)  # create a new image with 1 channel
+
+    height = grayImage.shape[0]  # takes the number of columns
+    width = grayImage.shape[1]  # takes the number of lines
+
+    for i in range(height):
+        for j in range(width):
+            if grayImage[i, j][0] > limit:
+                auxImage[i, j] = 255
+            else:
+                auxImage[i, j] = 0
+
+    cv.imshow("threshold -", auxImage)
+
+
 def main():
     path_img_01 = 'images/images.jpeg'
 
     image02 = io.imread(path_img_01)
 
-    cv.imshow("normal", image02)
+    # convertToGray(image02)
+    # convertToGrayWeighted(image02)
+    threshold(image02, 160)
 
-    convertToGray(image02)
-    convertToGrayWeighted(image02)
+    image02 = cv.cvtColor(image02, cv.COLOR_BGR2RGB)
+    cv.imshow("normal", image02)
 
     cv.waitKey(0)
 
