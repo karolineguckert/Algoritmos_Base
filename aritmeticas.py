@@ -2,22 +2,46 @@ import cv2 as cv2
 from skimage import io
 import numpy as np
 
+
 def adicao(image1, p1, image2, p2):
     newImage = np.zeros((image1.shape[0], image1.shape[1], 3), np.uint8)
-    dst = np.zeros((image1.shape[0], image1.shape[1], 3), np.uint8)
-    for i in range(0, image1.shape[0]): #height
 
-        for j in range(0, image1.shape[1]): #width
-            #print(image1[i, j] * p1 + image2[i, j] * p2)
+    for i in range(0, image1.shape[0]):  # height
+        for j in range(0, image1.shape[1]):  # width
             newImage[i, j] = image1[i, j] * p1 + image2[i, j] * p2
-            dst = cv2.addWeighted(image1, p1, image2, p2, 0.0)
 
-    #cv2.imshow('meu', newImage)
-    #cv2.imshow('addWeigthed', dst)
-    cv2.imshow('soma', cv2.hconcat([newImage, dst]))
-    cv2.waitKey(0)
+    return newImage
 
 
-image1 = io.imread('images/barco.jpg')
-image2 = io.imread('images/flor.jpg')
-adicao(image1, 0.5, image2, 0.5)
+def subtracao(image1, image2):
+    if len(image1.shape) == 3:
+        newImage = np.zeros((image1.shape[0], image1.shape[1], 3), np.uint8)
+
+        for i in range(0, image1.shape[0]):  # height
+            for j in range(0, image1.shape[1]):  # width
+                r1 = image1.item(i, j, 0)
+                g1 = image1.item(i, j, 1)
+                b1 = image1.item(i, j, 2)
+
+                r2 = image2.item(i, j, 0)
+                g2 = image2.item(i, j, 1)
+                b2 = image2.item(i, j, 2)
+
+                newImage[i, j] = [abs(r1 - r2), abs(g1 - g2), abs(b1 - b2)]
+    else:
+        newImage = np.zeros((image1.shape[0], image1.shape[1], 1), np.uint8)
+
+        for i in range(0, image1.shape[0]):
+            for j in range(0, image1.shape[1]):
+                pixel = abs(image1.item(i, j) - image2.item(i, j))
+
+                newImage.itemset((i, j, 0), pixel)
+
+    return newImage
+
+
+image1 = cv2.imread('images/desk1.png',  cv2.IMREAD_GRAYSCALE)
+image2 = cv2.imread('images/desk2.png',  cv2.IMREAD_GRAYSCALE)
+cv2.imshow('teste1', subtracao(image1, image2))
+cv2.waitKey(0)
+
