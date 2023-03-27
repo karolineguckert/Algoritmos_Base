@@ -1,6 +1,5 @@
 import cv2 as cv
 import numpy as np
-from skimage import io
 
 
 # Function to convert a color image to grayscale
@@ -93,21 +92,3 @@ def threshold(image, limit):
                 auxImage[i, j] = 0
 
     cv.imshow("threshold -", auxImage)
-
-
-def main():
-    path_img_01 = 'images/images.jpeg'
-
-    image02 = io.imread(path_img_01)
-
-    # convertToGray(image02)
-    # convertToGrayWeighted(image02)
-    threshold(image02, 160)
-
-    image02 = cv.cvtColor(image02, cv.COLOR_BGR2RGB)
-    cv.imshow("normal", image02)
-
-    cv.waitKey(0)
-
-
-main()

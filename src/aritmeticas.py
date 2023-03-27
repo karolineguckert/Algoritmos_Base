@@ -1,6 +1,6 @@
 import cv2 as cv2
-from skimage import io
 import numpy as np
+
 
 def adicao(image1, p1, image2, p2):
     if len(image1.shape) == 3:
@@ -13,6 +13,7 @@ def adicao(image1, p1, image2, p2):
             newImage[i, j] = image1[i, j] * p1 + image2[i, j] * p2
 
     return newImage
+
 
 def subtracao(image1, image2):
     if len(image1.shape) == 3:
@@ -39,6 +40,7 @@ def subtracao(image1, image2):
                 newImage.itemset((i, j, 0), pixel)
 
     return newImage
+
 
 def multiplicacao(image1, image2):
     if len(image1.shape) == 3:
@@ -81,8 +83,7 @@ def multiplicacao(image1, image2):
     return newImage
 
 
-image1 = cv2.imread('images/desk1.png',  cv2.IMREAD_GRAYSCALE)
-image2 = cv2.imread('images/desk2.png',  cv2.IMREAD_GRAYSCALE)
+image1 = cv2.imread('images/desk1.png', cv2.IMREAD_GRAYSCALE)
+image2 = cv2.imread('images/desk2.png', cv2.IMREAD_GRAYSCALE)
 cv2.imshow('teste1', multiplicacao(image1, image2))
 cv2.waitKey(0)
-
