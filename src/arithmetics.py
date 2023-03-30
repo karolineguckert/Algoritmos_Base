@@ -87,7 +87,7 @@ def subtraction(image1, image2):
     return newImage
 
 
-def multiplicacao(image1, image2):
+def multiplication(image1, image2):
     rows = image1.shape[0]
     cols = image1.shape[1]
     shape_ = image1.shape
@@ -127,6 +127,47 @@ def multiplicacao(image1, image2):
                 pixel2 = image2.item(row, col)
 
                 result = pixel1 * pixel2
+
+                newImage.itemset((row, col, 0), result)
+
+    return newImage
+
+
+def division(image1, image2):
+    rows = image1.shape[0]
+    cols = image1.shape[1]
+    shape_ = image1.shape
+
+    if len(shape_) == 3:
+        newImage = np.zeros((image1.shape[0], image1.shape[1], 3), np.uint8)
+
+        for row in range(0, rows):
+            for col in range(0, cols):
+                r_img1 = 1 if image1.item(row, col, 0) == 0 else image1.item(row, col, 0)
+                g_img1 = 1 if image1.item(row, col, 1) == 0 else image1.item(row, col, 1)
+                b_img1 = 1 if image1.item(row, col, 2) == 0 else image1.item(row, col, 2)
+
+                r_img2 = 1 if image2.item(row, col, 0) == 0 else image2.item(row, col, 0)
+                g_img2 = 1 if image2.item(row, col, 1) == 0 else image2.item(row, col, 1)
+                b_img2 = 1 if image2.item(row, col, 2) == 0 else image2.item(row, col, 2)
+
+
+
+                r_result = r_img1 / r_img2
+                g_result = g_img1 / g_img2
+                b_result = b_img1 / b_img2
+
+                newImage.itemset((row, col, 0), r_result)
+                newImage.itemset((row, col, 1), g_result)
+                newImage.itemset((row, col, 2), b_result)
+    else:
+        newImage = np.zeros((image1.shape[0], image1.shape[1], 1), np.uint8)
+        for row in range(0, rows):
+            for col in range(0, cols):
+                pixel1 = 1 if image1.item(row, col) == 0 else image1.item(row, col)
+                pixel2 = 1 if image2.item(row, col) == 0 else image2.item(row, col)
+
+                result = pixel1 / pixel2
 
                 newImage.itemset((row, col, 0), result)
 
