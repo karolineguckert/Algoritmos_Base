@@ -1,13 +1,16 @@
 import cv2 as cv2
 import numpy as np
 
-
+# recebe duas imagens com mesmas dimensões (cores - BGR) e dois pesos
+# retorna a soma das imagens na proporção dos pesos (imagem BGR)
 def addition(image1, p1, image2, p2):
     rows = image1.shape[0]
     cols = image1.shape[1]
     shape_ = image1.shape
 
+    # Verifica se a imagem é colorida ou escala de cinza
     if len(shape_) == 3:
+        # Imagem colorida
         newImage = np.zeros((image1.shape[0], image1.shape[1], 3), np.uint8)
 
         for row in range(0, rows):
@@ -28,6 +31,7 @@ def addition(image1, p1, image2, p2):
                 newImage.itemset((row, col, 1), g_result)
                 newImage.itemset((row, col, 2), r_result)
     else:
+        # Imagem escala de cinza
         newImage = np.zeros((image1.shape[0], image1.shape[1], 1), np.uint8)
 
         for row in range(0, rows):
@@ -52,7 +56,9 @@ def subtraction(image1, image2):
     img1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
     img2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
 
+    # Verifica se a imagem é colorida ou escala de cinza
     if len(shape_) == 3:
+        # Imagem colorida
         newImage = np.zeros((rows, cols, 3), np.uint8)
 
         for row in range(0, rows):
@@ -69,11 +75,13 @@ def subtraction(image1, image2):
                 g_result = abs(g_img1 - g_img2)
                 r_result = abs(r_img1 - r_img2)
 
+                # Onde a imagem 2 é diferente da imagem 2, prevalece o conteúdo da imagem 2
                 if b_result != 0 and g_result != 0 and r_result != 0:
                     newImage.itemset((row, col, 0), image2.item(row, col, 0))
                     newImage.itemset((row, col, 1), image2.item(row, col, 1))
                     newImage.itemset((row, col, 2), image2.item(row, col, 2))
     else:
+        # Imagem escala de cinza
         newImage = np.zeros((rows, cols, 1), np.uint8)
         for row in range(0, rows):
             for col in range(0, cols):
@@ -91,8 +99,10 @@ def multiplication(image1, image2):
     rows = image1.shape[0]
     cols = image1.shape[1]
     shape_ = image1.shape
-
+    
+    # Verifica se a imagem é colorida ou escala de cinza
     if len(shape_) == 3:
+        # Imagem colorida
         newImage = np.zeros((image1.shape[0], image1.shape[1], 3), np.uint8)
 
         for row in range(0, rows):
@@ -109,6 +119,7 @@ def multiplication(image1, image2):
                 g_result = g_img1 * g_img2
                 b_result = b_img1 * b_img2
 
+                # Verifica overflow
                 if r_result > 255:
                     r_result = 255
                 if g_result > 255:
@@ -120,6 +131,7 @@ def multiplication(image1, image2):
                 newImage.itemset((row, col, 1), g_result)
                 newImage.itemset((row, col, 2), b_result)
     else:
+        # Imagem escala de cinza
         newImage = np.zeros((image1.shape[0], image1.shape[1], 1), np.uint8)
         for row in range(0, rows):
             for col in range(0, cols):
@@ -138,7 +150,9 @@ def division(image1, image2):
     cols = image1.shape[1]
     shape_ = image1.shape
 
+    # Verifica se a imagem é colorida ou escala de cinza
     if len(shape_) == 3:
+        # Imagem colorida
         newImage = np.zeros((image1.shape[0], image1.shape[1], 3), np.uint8)
 
         for row in range(0, rows):
@@ -151,8 +165,6 @@ def division(image1, image2):
                 g_img2 = 1 if image2.item(row, col, 1) == 0 else image2.item(row, col, 1)
                 b_img2 = 1 if image2.item(row, col, 2) == 0 else image2.item(row, col, 2)
 
-
-
                 r_result = r_img1 / r_img2
                 g_result = g_img1 / g_img2
                 b_result = b_img1 / b_img2
@@ -161,6 +173,7 @@ def division(image1, image2):
                 newImage.itemset((row, col, 1), g_result)
                 newImage.itemset((row, col, 2), b_result)
     else:
+        # Imagem escala de cinza
         newImage = np.zeros((image1.shape[0], image1.shape[1], 1), np.uint8)
         for row in range(0, rows):
             for col in range(0, cols):
