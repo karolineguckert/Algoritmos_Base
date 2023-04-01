@@ -4,14 +4,11 @@ from helpers import *
 
 def testHistogram(nameOfImage):
     image = readImage(nameOfImage)
-    imageGray = convertToGray(image)
 
-    histogramGrayscale(image, imageGray)
-    histogramColor(image)
-    equalizeHistogram(imageGray)
+    colorfulHistogram(image)
+    grayscaleHistogram(image)
 
     showImageAndDestroyAll(image)
 
-
 testHistogram('imagem-2.jpg')
-
+testHistogram('ave-03.jpeg')
