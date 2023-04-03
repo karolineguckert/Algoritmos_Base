@@ -71,4 +71,4 @@ def testDivisionGrayScale():
 #testMultiplication()
 #testMultiplicationGrayScale()
 #testDivision()
-#testDivisionGrayScale()
+testDivisionGrayScale()
