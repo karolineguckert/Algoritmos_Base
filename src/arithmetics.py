@@ -147,6 +147,7 @@ def multiplication(image1, image2):
 
     return newImage
 
+
 # gets 2 same-sized images
 # returns the division of image1 and image2
 def division(image1, image2):

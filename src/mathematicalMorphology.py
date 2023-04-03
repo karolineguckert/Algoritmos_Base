@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 
 
@@ -114,3 +116,62 @@ def convolution(image, kernel):
                 resultImage[j][i] = pixelValue
 
     return resultImage
+
+
+# Function to apply roberts method
+def roberts(image):
+    height = image.shape[0]  # takes the number of columns
+    width = image.shape[1]  # takes the number of lines
+
+    kernel_gx = np.array([[0, 1], [-1, 0]])  # Gx
+    kernel_gy = np.array([[1, 0], [0, -1]])  # Gy
+
+    resultImage = np.zeros((height, width, 1), np.uint8)
+
+    for i in range(0, width - 1):  # lines
+        for j in range(0, height - 1):  # columns
+            pixel_gy = 0  # reset gy of pixel
+            pixel_gx = 0  # reset gx of pixel
+
+            for k in range(0, 2):
+                for l in range(0, 2):
+                    pixel_gx += kernel_gx[k][l] * image[j + l][i + k][0]  # calculate gx of pixel
+
+            for k in range(0, 2):
+                for l in range(0, 2):
+                    pixel_gy += kernel_gy[k][l] * image[j + l][i + k][0]  # calculate gy of pixel
+
+            pixel_result = int(abs(((pixel_gx ** 2) + (pixel_gy ** 2)) ** 0.5))
+            resultImage[j][i] = pixel_result
+
+    return resultImage
+
+
+# Function to apply sobel method
+def sobel(image):
+    height = image.shape[0]  # takes the number of columns
+    width = image.shape[1]  # takes the number of lines
+
+    kernel_gx = np.array([[1, 2, 1], [0, 0, 0], [-1, -2, -1]])  # Gx
+    kernel_gy = np.array([[1, 0, -1], [2, 0, -2], [1, 0, -1]])  # Gy
+
+    resultImage = np.zeros((height, width, 1), np.uint8)
+
+    for i in range(0, width - 1):  # lines
+        for j in range(0, height - 1):  # columns
+            pixel_gy = 0  # reset gy of pixel
+            pixel_gx = 0  # reset gx of pixel
+
+            for k in range(0, 3):
+                for l in range(0, 3):
+                    pixel_gx += kernel_gx[k][l] * image[j - 1 + k][i - 1 + k][0]  # calculate gx of pixel
+
+            for k in range(0, 3):
+                for l in range(0, 3):
+                    pixel_gy += kernel_gy[k][l] * image[j - 1 + l][i - 1 + k][0]  # calculate gy of pixel
+
+            pixel_result = int(abs(((pixel_gx ** 2) + (pixel_gy ** 2)) ** 0.5))
+            resultImage[j][i] = pixel_result
+
+    return resultImage
+

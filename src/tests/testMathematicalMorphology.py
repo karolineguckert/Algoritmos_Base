@@ -34,9 +34,23 @@ def testGenerateImageConvolution(nameOfImage, kernel):
     saveImage(newImage, 'mathematicalMorphology', 'convolution')
 
 
+def testGenerateImageRoberts(nameOfImage):
+    image = readImage(nameOfImage)
+    image = convertToGrayWeighted(image)
+    newImage = roberts(image)
+    saveImage(newImage, 'mathematicalMorphology', 'roberts')
+
+
+def testGenerateImageSobel(nameOfImage):
+    image = readImage(nameOfImage)
+    image = convertToGrayWeighted(image)
+    newImage = sobel(image)
+    saveImage(newImage, 'mathematicalMorphology', 'sobel')
+
+
 def generateAll():
     nameImage1 = 'j.png'
-    nameImage2 = 'gato.jpeg'
+    nameImage2 = 'imagem-1.jpg'
     kernel_5x5 = np.ones([5, 5], np.uint8)
     kernelConvolution = np.array([[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]])
 
@@ -45,6 +59,8 @@ def generateAll():
     testGenerateImageOpening(nameImage1, kernel_5x5)
     testGenerateImageClosing(nameImage1, kernel_5x5)
     testGenerateImageConvolution(nameImage2, kernelConvolution)
+    testGenerateImageRoberts(nameImage2)
+    testGenerateImageSobel(nameImage2)
 
 
 generateAll()
