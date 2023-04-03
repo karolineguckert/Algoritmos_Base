@@ -1,4 +1,5 @@
 import numpy as np
+from src.arithmetics import *
 
 
 # Function to erosion the image
@@ -114,3 +115,15 @@ def convolution(image, kernel):
                 resultImage[j][i] = pixelValue
 
     return resultImage
+
+# Function to show external limits of the image
+def limitExternal(image, kernel):
+    dilationImg = dilation(image, kernel)
+    erosionImg = erosion(image, kernel)
+    return(subtraction(dilationImg, erosionImg)) # calculate the subtraction between dilation and erosion
+
+# Function to show internal limits of the image
+def limitInternal(image, kernel):
+    dilationImg = dilation(image, kernel)
+    erosionImg = erosion(image, kernel)
+    return (subtraction(erosionImg, dilationImg)) # calculate the subtraction between erosion and dilation
