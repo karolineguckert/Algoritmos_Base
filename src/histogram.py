@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from src.manipulateColor import *
 
+
 # Function to calculate histogram
 def calculateHistogram(image, channels):
     pixelCounter = [] # creates an array to count pixel values
@@ -21,6 +22,7 @@ def calculateHistogram(image, channels):
 
     return pixelList, pixelCounter
 
+
 # Function to plot histogram
 def plotHist(r1, count1):
     plt.bar(r1, count1)
@@ -29,11 +31,13 @@ def plotHist(r1, count1):
     plt.title('Histogram of the image')
     plt.show()
 
+
 # Function to show histogram of a grayscale image
 def grayscaleHistogram(image):
     image = convertToGray(image)
     pixelList, pixelCounter = calculateHistogram(image, 1)
     plotHist(pixelList, pixelCounter)
+
 
 # Function to show histogram of a color image
 def colorfulHistogram(image):

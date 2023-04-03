@@ -4,31 +4,46 @@ from helpers import *
 
 def testGenerateImageGray(nameOfImage):
     image = readImage(nameOfImage)
-    convertToGray(image)
-    showImage(image)
+    newImage = convertToGray(image)
+    saveImage(newImage, 'manipulateColor', 'gray')
 
 
 def testGenerateImageGrayWeighted(nameOfImage):
     image = readImage(nameOfImage)
-    convertToGrayWeighted(image)
-    showImage(image)
+    newImage = convertToGrayWeighted(image)
+    saveImage(newImage, 'manipulateColor', 'grayWeighted')
 
 
 def testGenerateImageIsolateChanel(nameOfImage):
     image = readImage(nameOfImage)
-    isolateChanel(image)
-    showImage(image)
+    newImageRed, newImageGreen, newImageBlue = isolateChanel(image)
+
+    saveImage(newImageRed, 'manipulateColor', 'red')
+    saveImage(newImageGreen, 'manipulateColor', 'green')
+    saveImage(newImageBlue, 'manipulateColor', 'blue')
 
 
 def testGenerateImageInverted(nameOfImage):
     image = readImage(nameOfImage)
-    invertImage(image)
-    showImage(image)
+    newImage = invertImage(image)
+    saveImage(newImage, 'manipulateColor', 'inverted')
 
 
 def testGenerateImageThreshold(nameOfImage, limit):
     image = readImage(nameOfImage)
-    threshold(image, limit)
-    showImage(image)
+    newImage = threshold(image, limit)
+    saveImage(newImage, 'manipulateColor', 'threshold')
 
-testGenerateImageThreshold("imagem-2.jpg", 160)
+
+def generateAll():
+    nameImage1 = "imagem-2.jpg"
+    nameImage2 = "gato.jpeg"
+
+    testGenerateImageGray(nameImage2)
+    testGenerateImageGrayWeighted(nameImage2)
+    testGenerateImageThreshold(nameImage1, 160)
+    testGenerateImageIsolateChanel(nameImage2)
+    testGenerateImageInverted(nameImage2)
+
+
+generateAll()

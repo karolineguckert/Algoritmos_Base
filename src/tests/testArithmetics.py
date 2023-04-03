@@ -9,6 +9,21 @@ def testAddition():
     cv2.waitKey(0)
 
 
+# def testAddition(nameOfImage1, nameOfImage2):
+#     image1 = readImage(nameOfImage1)
+#     image2 = readImage(nameOfImage2)
+#
+#     newImageCv2 = cv2.hconcat([image1, image2])
+#     newImage = addition(image1, 0.5, image2, 0.5)
+#
+#     saveImage(newImageCv2, 'arithmetics', 'additionCv2')
+#     saveImage(newImage, 'arithmetics', 'addition')
+
+    # cv2.imshow('images', cv2.hconcat([image1, image2]))
+    # cv2.imshow('addition', addition(image1, 0.5, image2, 0.5))
+    # cv2.waitKey(0)
+
+
 def testAdditionGrayScale():
     image1 = cv2.imread('../../images/barco.jpg', cv2.IMREAD_GRAYSCALE)
     image2 = cv2.imread('../../images/flor.jpg', cv2.IMREAD_GRAYSCALE)
@@ -63,3 +78,12 @@ def testDivisionGrayScale():
     cv2.imshow('images', cv2.hconcat([image1, image2]))
     cv2.imshow('division greyscale', division(image1, image2))
     cv2.waitKey(0)
+
+
+def generateAll():
+    nameImage1 = 'barco.jpg'
+    nameImage2 = 'flor.jpg'
+    testAddition()
+
+
+generateAll()

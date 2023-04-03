@@ -1,6 +1,7 @@
 import cv2 as cv2
 import numpy as np
 
+
 # recebe duas imagens com mesmas dimensões (cores - BGR) e dois pesos
 # retorna a soma das imagens na proporção dos pesos (imagem BGR)
 def addition(image1, p1, image2, p2):

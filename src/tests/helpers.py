@@ -1,5 +1,5 @@
 from skimage import io
-import cv2 as cv
+import cv2 as cv2
 
 
 def readImage(nameOfImage):
@@ -7,19 +7,23 @@ def readImage(nameOfImage):
 
 
 def convertColor(image):
-    return cv.cvtColor(image, cv.COLOR_BGR2RGB)
+    return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 
 def showImage(image):
-    cv.imshow("normal", convertColor(image))
-    cv.waitKey(0)
+    cv2.imshow("normal", convertColor(image))
+    cv2.waitKey(0)
+
+
+def saveImage(image, nameOfFolder, nameOfImage):
+    cv2.imwrite('../../images_results/' + nameOfFolder + '/' + nameOfImage + '.jpg', image);
 
 
 def showImageAndDestroyAll(image):
-    cv.imshow('normal', image)
+    cv2.imshow('normal', image)
 
     # keep image opened until ESC is pressed
     while True:
-        k = cv.waitKey(0)
+        k = cv2.waitKey(0)
         if k == 27: break
-    cv.destroyAllWindows()
+    cv2.destroyAllWindows()
