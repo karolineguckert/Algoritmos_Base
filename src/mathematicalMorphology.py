@@ -1,6 +1,3 @@
-import math
-
-import numpy as np
 from src.arithmetics import *
 
 
@@ -181,10 +178,11 @@ def sobel(image):
 def limitExternal(image, kernel):
     dilationImg = dilation(image, kernel)
     erosionImg = erosion(image, kernel)
-    return(subtraction(dilationImg, erosionImg)) # calculate the subtraction between dilation and erosion
+    return subtraction(dilationImg, erosionImg)  # calculate the subtraction between dilation and erosion
+
 
 # Function to show internal limits of the image
 def limitInternal(image, kernel):
     dilationImg = dilation(image, kernel)
     erosionImg = erosion(image, kernel)
-    return (subtraction(erosionImg, dilationImg)) # calculate the subtraction between erosion and dilation
+    return subtraction(erosionImg, dilationImg)  # calculate the subtraction between erosion and dilation
