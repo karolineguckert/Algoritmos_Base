@@ -2,12 +2,14 @@ import cv2 as cv2
 import numpy as np
 
 
+# gets 2 same-sized images and 2 weights
+# returns the weitghted addition of image1 and image2
 def addition(image1, p1, image2, p2):
     rows = image1.shape[0]
     cols = image1.shape[1]
     shape_ = image1.shape
 
-
+    # checks if image is colorful or grayscale
     if len(shape_) == 3:
         img1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
         img2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
@@ -46,13 +48,14 @@ def addition(image1, p1, image2, p2):
     return newImage
 
 
-# recebe duas imagens com mesmas dimensões (cores - BGR)
-# retorna a diferença (imagem BGR)
+# gets 2 same-sized images
+# returns the difference between image1 and image2
 def subtraction(image1, image2):
     rows = image1.shape[0]
     cols = image1.shape[1]
     shape_ = image1.shape
 
+    # checks if image is colorful or grayscale
     if len(shape_) == 3:
         img1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
         img2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
@@ -91,12 +94,14 @@ def subtraction(image1, image2):
 
     return newImage
 
-
+# gets two same-sized images
+# returns the multiplication of image1 and image2
 def multiplication(image1, image2):
     rows = image1.shape[0]
     cols = image1.shape[1]
     shape_ = image1.shape
 
+    # checks if image is colorful or grayscale
     if len(shape_) == 3:
         newImage = np.zeros((image1.shape[0], image1.shape[1], 3), np.uint8)
 
@@ -137,12 +142,14 @@ def multiplication(image1, image2):
 
     return newImage
 
-
+# gets 2 same-sized images
+# returns the division of image1 and image2
 def division(image1, image2):
     rows = image1.shape[0]
     cols = image1.shape[1]
     shape_ = image1.shape
 
+    # checks if image is colorful or grayscale
     if len(shape_) == 3:
         newImage = np.zeros((image1.shape[0], image1.shape[1], 3), np.uint8)
 
