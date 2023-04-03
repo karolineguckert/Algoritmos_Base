@@ -7,18 +7,22 @@ def addition(image1, p1, image2, p2):
     cols = image1.shape[1]
     shape_ = image1.shape
 
+
     if len(shape_) == 3:
+        img1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
+        img2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
+
         newImage = np.zeros((image1.shape[0], image1.shape[1], 3), np.uint8)
 
         for row in range(0, rows):
             for col in range(0, cols):
-                b_img1 = image1.item(row, col)
-                g_img1 = image1.item(row, col)
-                r_img1 = image1.item(row, col)
+                b_img1 = img1.item(row, col)
+                g_img1 = img1.item(row, col)
+                r_img1 = img1.item(row, col)
 
-                b_img2 = image2.item(row, col)
-                g_img2 = image2.item(row, col)
-                r_img2 = image2.item(row, col)
+                b_img2 = img2.item(row, col)
+                g_img2 = img2.item(row, col)
+                r_img2 = img2.item(row, col)
 
                 b_result = b_img1 * p1 + b_img2 * p2
                 g_result = g_img1 * p1 + g_img2 * p2
@@ -49,10 +53,10 @@ def subtraction(image1, image2):
     cols = image1.shape[1]
     shape_ = image1.shape
 
-    img1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
-    img2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
-
     if len(shape_) == 3:
+        img1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
+        img2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
+
         newImage = np.zeros((rows, cols, 3), np.uint8)
 
         for row in range(0, rows):
@@ -82,7 +86,8 @@ def subtraction(image1, image2):
 
                 result = abs(pixel1 - pixel2)
 
-                newImage.itemset((row, col, 0), result)
+                if result != 0:
+                    newImage.itemset((row, col, 0), image2.item(row, col))
 
     return newImage
 

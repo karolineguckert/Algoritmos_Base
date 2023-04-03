@@ -63,3 +63,12 @@ def testDivisionGrayScale():
     cv2.imshow('images', cv2.hconcat([image1, image2]))
     cv2.imshow('division greyscale', division(image1, image2))
     cv2.waitKey(0)
+
+#testAddition()
+#testAdditionGrayScale()
+#testSubtraction()
+#testSubtractionGrayScale()
+#testMultiplication()
+#testMultiplicationGrayScale()
+#testDivision()
+#testDivisionGrayScale()
