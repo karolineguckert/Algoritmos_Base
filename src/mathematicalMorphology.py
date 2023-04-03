@@ -49,16 +49,16 @@ def dilation(image, kernel):
     resultImage = np.zeros([height, width, 4], np.uint8)
 
     start = int(len(kernel) / 2)  # initial position
-    row_element = len(kernel)  # takes the number of lines
-    col_element = len(kernel[0])  # takes the number of columns
+    widthKernel = len(kernel)  # takes the number of lines
+    heightKernel = len(kernel[0])  # takes the number of columns
 
     for i in range(start, width - start):  # lines
         for j in range(start, height - start):  # columns
             pixelImage = image[j][i]  # get pixel of the image
 
             if pixelImage[0] != 0:
-                for k in range(0, row_element):  # lines
-                    for l in range(0, col_element):  # columns
+                for k in range(0, widthKernel):  # lines
+                    for l in range(0, heightKernel):  # columns
                         pixelKernel = kernel[k][l]
 
                         positionLine = i - start + k  # get line position of pixel
@@ -81,3 +81,36 @@ def opening(image, kernel):
 def closing(image, kernel):
     imageDilation = dilation(image, kernel)
     return erosion(imageDilation, kernel)
+
+
+# Function to convolution the image
+def convolution(image, kernel):
+    height = image.shape[0]  # takes the number of columns
+    width = image.shape[1]  # takes the number of lines
+
+    resultImage = np.zeros([height, width, 3], np.uint8)
+
+    start = int(len(kernel) / 2)  # initial position
+    widthKernel = len(kernel)  # takes the number of lines
+    heightKernel = len(kernel[0])  # takes the number of columns
+
+    for i in range(start, width - start):  # lines
+        for j in range(start, height - start):  # columns
+            pixelValue = 0
+
+            for k in range(0, widthKernel):  # lines
+                for l in range(0, heightKernel):  # columns
+                    positionLine = i - start + k  # get line position of pixel
+                    positionColumn = j - start + l  # get column position of pixel
+
+                    pixel = image[positionColumn][positionLine]
+                    pixelValue += pixel[0] * kernel[k][l]
+
+            if pixelValue < 0:
+                resultImage[j][i] = 0
+            elif pixelValue > 255:
+                resultImage[j][i] = 255
+            else:
+                resultImage[j][i] = pixelValue
+
+    return resultImage
