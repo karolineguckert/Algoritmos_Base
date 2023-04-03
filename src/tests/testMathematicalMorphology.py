@@ -1,6 +1,6 @@
 from helpers import *
-from mathematicalMorphology import *
-from manipulateColor import *
+from src.manipulateColor import *
+from src.mathematicalMorphology import *
 
 
 def testGenerateImageErosion(nameOfImage, kernel):
@@ -33,6 +33,19 @@ def testGenerateImageConvolution(nameOfImage, kernel):
     newImage = convolution(image, kernel)
     saveImage(newImage, 'mathematicalMorphology', 'convolution')
 
+def testLimitExternal(nameOfImage, kernel):
+    image = readImage(nameOfImage)
+    gray = convertToGray(image)
+    newImage = limitExternal(gray, kernel)
+    saveImage(newImage, 'mathematicalMorphology', 'external limits')
+
+
+def testLimitInternal(nameOfImage, kernel):
+    image = readImage(nameOfImage)
+    gray = convertToGray(image)
+    newImage = limitInternal(gray, kernel)
+    saveImage(newImage, 'mathematicalMorphology', 'internal limits')
+
 
 def testGenerateImageRoberts(nameOfImage):
     image = readImage(nameOfImage)
@@ -63,4 +76,13 @@ def generateAll():
     testGenerateImageSobel(nameImage2)
 
 
+def testLimits():
+    nameImage1 = 'bob.jpg'
+    kernel = np.ones([2, 2], np.uint8)
+
+    testLimitExternal(nameImage1, kernel)
+    testLimitInternal(nameImage1, kernel)
+
+
+testLimits()
 generateAll()
