@@ -174,6 +174,38 @@ def sobel(image):
     return resultImage
 
 
+# Function to apply robinson method
+def robinson(image):
+    height = image.shape[0]  # takes the number of columns
+    width = image.shape[1]  # takes the number of lines
+
+    resultImage = np.zeros((height, width, 1), np.uint8)
+
+    kernel = [
+        [[1, 2, 1], [0, 0, 0], [-1, -2, 1]],
+        [[2, 1, 0], [1, 0, -1], [0, -1, -2]],
+        [[1, 0, -1], [2, 0, -2], [1, 0, -1]],
+        [[0, -1, -2], [1, 0, -1], [2, 1, 0]],
+        [[-1, -2, -1], [0, 0, 0], [1, 2, 1]],
+        [[-2, -1, 0], [-1, 0, 1], [0, 1, 2]],
+        [[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]],
+        [[0, 1, 2], [-1, 0, 1], [-2, -1, 0]],
+    ]
+
+    for i in range(1, width - 1):
+        for j in range(1, height - 1):
+            auxArray = [0, 0, 0, 0, 0, 0, 0, 0]
+
+            for k in range(8):
+                for l in range(3):
+                    for m in range(3):
+                        auxArray[k] += kernel[k][l][m] * image[j - 1 + m][i - 1 + l][0]
+            pixel = max(auxArray)
+            resultImage[j][i] = pixel
+
+    return resultImage
+
+
 # Function to show external limits of the image
 def limitExternal(image, kernel):
     dilationImg = dilation(image, kernel)

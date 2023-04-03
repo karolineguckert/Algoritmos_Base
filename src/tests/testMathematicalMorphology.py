@@ -61,6 +61,21 @@ def testGenerateImageSobel(nameOfImage):
     saveImage(newImage, 'mathematicalMorphology', 'sobel')
 
 
+def testGenerateImageRobinson(nameOfImage):
+    image = readImage(nameOfImage)
+    image = convertToGrayWeighted(image)
+    newImage = robinson(image)
+    saveImage(newImage, 'mathematicalMorphology', 'robinson')
+
+
+def testLimits():
+    nameImage1 = 'bob.jpg'
+    kernel = np.ones([2, 2], np.uint8)
+
+    testLimitExternal(nameImage1, kernel)
+    testLimitInternal(nameImage1, kernel)
+
+
 def generateAll():
     nameImage1 = 'j.png'
     nameImage2 = 'imagem-1.jpg'
@@ -74,15 +89,8 @@ def generateAll():
     testGenerateImageConvolution(nameImage2, kernelConvolution)
     testGenerateImageRoberts(nameImage2)
     testGenerateImageSobel(nameImage2)
+    testGenerateImageRobinson(nameImage2)
+    testLimits()
 
 
-def testLimits():
-    nameImage1 = 'bob.jpg'
-    kernel = np.ones([2, 2], np.uint8)
-
-    testLimitExternal(nameImage1, kernel)
-    testLimitInternal(nameImage1, kernel)
-
-
-testLimits()
 generateAll()
