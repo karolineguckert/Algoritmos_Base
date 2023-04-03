@@ -1,37 +1,45 @@
 import matplotlib.pyplot as plt
-from manipulateColor import *
+from src.manipulateColor import *
 
 
-# Function to show histogram for a grayscale image
-def histogramGrayscale(image, imageGray):
-    # openCv builtIn function to calculate histogram
-    # params: image, channels (0 because is grayscale), mask (NONE to find histogram for full image),
-    # histogram size (256 for full scale), range
-    hist = cv.calcHist([imageGray], [0], None, [256], [0, 256])
+# Function to calculate histogram
+def calculateHistogram(image, channels):
+    pixelCounter = [] # creates an array to count pixel values
+    pixelList = [] # creates an array for 256 positions
 
-    plt.hist(image.ravel(), 256, [0, 256])  # function to plot histogram
-    plt.title('Histogram for grayscale image')
+    height = image.shape[0]  # takes the number of columns
+    width = image.shape[1]  # takes the number of lines
+
+    for pixel in range(0, 256):
+        pixelList.append(pixel)
+        pixelCount = 0
+        for h in range(height):
+            for w in range(width):
+                for c in range(channels):
+                    if image[h, w, c] == pixel:
+                        pixelCount += 1
+        pixelCounter.append(pixelCount)
+
+    return pixelList, pixelCounter
+
+
+# Function to plot histogram
+def plotHist(r1, count1):
+    plt.bar(r1, count1)
+    plt.xlabel('Pixel List')
+    plt.ylabel('Pixel Counter')
+    plt.title('Histogram of the image')
     plt.show()
 
 
-# Function to show histogram for a color image
-def histogramColor(image):
-    color = ('b', 'g', 'r')
-    for channel, col in enumerate(color):
-        # channel param = r, g or b
-        histr = cv.calcHist([image], [channel], None, [256], [0, 256])
-        plt.plot(histr, color=col)
-        plt.xlim([0, 256])
-    plt.title('Histogram for color scale image')
-    plt.show()
+# Function to show histogram of a grayscale image
+def grayscaleHistogram(image):
+    image = convertToGray(image)
+    pixelList, pixelCounter = calculateHistogram(image, 1)
+    plotHist(pixelList, pixelCounter)
 
 
-# Function to show an equalized image
-def equalizeHistogram(image):
-    img = image
-    imgToYuv = cv.cvtColor(img, cv.COLOR_BGR2RGB)  # transform bgr to yuv
-    imgToYuv[:, :, 0] = cv.equalizeHist(imgToYuv[:, :, 0])  # openCv method to equalize
-    histEqualizationResult = cv.cvtColor(imgToYuv, cv.COLOR_YUV2BGR)  # transform back to bgr
-
-    cv.imwrite('images_results/histogramEqResult.jpg', histEqualizationResult)
-
+# Function to show histogram of a color image
+def colorfulHistogram(image):
+    pixelList, pixelCounter = calculateHistogram(image, 3)
+    plotHist(pixelList, pixelCounter)

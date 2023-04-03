@@ -1,4 +1,3 @@
-import cv2 as cv
 import numpy as np
 
 
@@ -14,8 +13,6 @@ def convertToGray(image):
         for j in range(width):
             # sum all the color values and multiply to 0.33 to convert to grayscale
             auxImage[i, j] = sum(image[i, j]) * 0.33
-
-    cv.imshow("grayscale - arithmetic", auxImage)
 
     return auxImage
 
@@ -36,7 +33,7 @@ def convertToGrayWeighted(image):
             # multiply each color channel and sum all the values to convert to grayscale
             auxImage[i, j] = (r * float(0.299) + g * float(0.587) + b * float(0.114))
 
-    cv.imshow("grasycale - weighted", auxImage)
+    return auxImage
 
 
 # Function to isolate the channels of the image
@@ -57,9 +54,7 @@ def isolateChanel(image):
             auxImageGreen[i, j] = (0, g, 0)  # takes just the green pixel and makes others get 0
             auxImageBlue[i, j] = (b, 0, 0)  # takes just the blue pixel and makes others get 0
 
-    cv.imshow("isolate chanel red-", auxImageRed)
-    cv.imshow("isolate chanel green-", auxImageGreen)
-    cv.imshow("isolate chanel blue-", auxImageBlue)
+    return auxImageRed, auxImageGreen, auxImageBlue
 
 
 # Function to invert the image
@@ -73,7 +68,7 @@ def invertImage(image):
         for j in range(width):
             auxImage[i, j] = 255 - image[i, j]  # subtract the possible maximum value of the pixel value
 
-    cv.imshow("inverted -", auxImage)
+    return auxImage
 
 
 # Function to threshold the image
@@ -91,4 +86,4 @@ def threshold(image, limit):
             else:
                 auxImage[i, j] = 0
 
-    cv.imshow("threshold -", auxImage)
+    return auxImage
